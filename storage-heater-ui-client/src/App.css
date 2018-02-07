@@ -1,0 +1,51 @@
+.App {
+}
+
+.App-header {
+  background-color: #4a5561;
+  height: 65px;
+  padding: 20px;
+  color: white;
+  text-align: left;
+  border-radius: 0px 0px 80px 80px;
+  -moz-border-radius: 0px 0px 80px 80px;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.app-content {
+  display: inline-block;
+  width: 81%;
+}
+
+.app-body {
+  display: inline-block;
+  width:  100%
+}
+
+.app-menu {
+  display: inline-block;
+  width: 15%;
+  float:left;
+  padding-right: 1rem;
+}
+
+.app-table {
+   width: 100%;
+}
+
+.app-table-search-panel {
+  margin-bottom: 2rem;
+}
+
+.app-table-searchButton {
+    background: #0000FF;
+    border: none;
+    color: white;
+    padding: 3px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}

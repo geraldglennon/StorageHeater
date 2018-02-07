@@ -1,0 +1,14 @@
+[
+  {
+    "id": "59aa764bd8581601fc2a4788",
+    "name": "test1",
+    "description": "This is a test",
+    "versions": ["0.0.1", "0.0.2"]
+  },
+  {
+    "id": "59aa764bd8581601fc2a4789",
+    "name": "test2",
+    "description": "This is test 2",
+    "versions": ["0.0.1", "0.0.2"]
+  }
+]

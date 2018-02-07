@@ -1,0 +1,72 @@
+.detailedView-panel {
+    padding: 5px 5px 5px 5px;
+}
+
+.detailedView-buttons {
+    float:right;
+}
+
+.detailedView-buttons .detailedView-saveButton {
+    margin-right: 3px;
+    background: red;
+}
+
+.detailedView-buttons .detailedView-deleteButton {
+    margin-right: 3px;
+    background: blue;
+}
+
+.detailedView-buttons .detailedView-lockButton {
+    margin-right: 3px;
+    background: green;
+}
+
+.detailedView-buttons .detailedView-modeButton {
+    margin-right: 3px;
+    background: #a132ba;
+}
+
+.detailedView-buttons .detailedView-newVersionButton {
+    margin-right: 3px;
+    background: #ff6600;
+}
+
+.detailedView-body {
+    padding-top: 30px;
+}
+
+.detailedView-deleteDialog-okButton {
+    border-radius: 5px 5px 5px 5px;
+    moz-border-radius: 5px 5px 5px 5px;
+}
+
+.detailedView-deleteDialog-cancelButton {
+    margin-right: 8px;
+    border-radius: 5px 5px 5px 5px;
+    moz-border-radius: 5px 5px 5px 5px;
+}
+
+.detailedView-deleteDialog-panel {
+    text-align: center;
+}
+
+.detailedView-versionSelect {
+    float: right;
+}
+
+.detailedView-version-select {
+    width: 200px;
+}
+
+.detailedView-label span {
+    background-color: #54a70b;
+    color: white;
+    border-radius: 5px 5px 5px 5px;
+    moz-border-radius: 5px 5px 5px 5px;
+    padding: 3px 3px 3px 3px;
+    font-size: 80%;
+}
+
+.detailedView-description textarea {
+    width: 60%;
+}

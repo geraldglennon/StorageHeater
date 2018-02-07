@@ -1,0 +1,31 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "jsoneditor": "^5.7.0",
+    "lodash": "^4.17.4",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isequal": "^4.5.0",
+    "prop-types": "^15.5.10",
+    "rc-menu": "^5.1.4",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-modal-dialog": "^4.0.7",
+    "react-notify": "^3.0.0",
+    "react-router": "^3.0.2",
+    "react-select": "^1.0.0-rc.5",
+    "react-table": "5.3.*"
+  },
+  "devDependencies": {
+    "react-scripts": "^0.9.4",
+    "riek": "^1.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:8040"
+}

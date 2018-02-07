@@ -1,0 +1,11 @@
+version: '3'
+services:
+  backend:
+      image: storage-heater-server:latest
+      ports:
+        - "80:80"
+      environment:
+            - spring.profiles.active=prod
+            - spring.data.mongodb.host=db
+            - spring.data.mongodb.port=27017
+            - spring.data.mongodb.database=storageDb

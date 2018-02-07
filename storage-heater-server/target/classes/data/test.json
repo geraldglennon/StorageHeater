@@ -1,0 +1,31 @@
+[
+  {
+    "name": "test1",
+    "description": "This is a test",
+    "locked": true,
+    "properties": {
+      "host": "193.0.0.1"
+    }
+  },
+  {
+    "name": "test2",
+    "description": "This is test 2",
+    "properties": {
+      "host": "193.0.0.2"
+    }
+  },
+  {
+    "name": "test3",
+    "description": "This is test 3",
+    "properties": {
+      "host": "193.0.0.3"
+    }
+  },
+  {
+    "name": "test4",
+    "description": "This is test 4",
+    "properties": {
+      "host": "193.0.0.4"
+    }
+  }
+]

@@ -1,0 +1,21 @@
+.options_block {
+    display: inline-block;
+}
+
+.storage_list {
+    display: inline-block;
+}
+
+.create_storage {
+    display: inline-block;
+    margin-left: 2rem;
+}
+
+.box {
+    border: grey 2px solid;
+    padding: 1rem;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+}
