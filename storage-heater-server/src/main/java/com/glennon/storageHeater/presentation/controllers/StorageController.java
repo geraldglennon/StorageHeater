@@ -1,5 +1,7 @@
 package com.glennon.storageHeater.presentation.controllers;
 
+import com.glennon.storageHeater.presentation.api.LabelObject;
+import com.glennon.storageHeater.presentation.api.StorageObject;
 import com.glennon.storageHeater.presentation.model.*;
 import com.glennon.storageHeater.presentation.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;

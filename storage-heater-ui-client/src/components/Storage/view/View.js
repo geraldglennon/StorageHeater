@@ -50,6 +50,7 @@ export default class DetailedView extends Component {
                    'Accept': 'application/json',
                    'Content-Type': 'application/json'
             },
+            credentials: 'same-origin',
             body: JSON.stringify(this.state.data)
         })
           .then(response => {
@@ -76,7 +77,8 @@ export default class DetailedView extends Component {
             headers: {
                    'Accept': 'application/json',
                    'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'same-origin'
         })
           .then(response => {
             if (this.validateHttpRequest(response.status)) {
@@ -130,7 +132,8 @@ export default class DetailedView extends Component {
 
     deleteData() {
         fetch(`/api/storage/${this.state.id}`, {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    credentials: 'same-origin'
                 })
                 .then(response => {
                   if (this.validateHttpRequest(response.status)) {
@@ -146,7 +149,7 @@ export default class DetailedView extends Component {
     }
 
     fetch(id) {
-        fetch(`/api/storage/${id}`)
+        fetch(`/api/storage/${id}`, {credentials: 'same-origin'})
             .then(response => {
                 if (this.validateHttpRequest(response.status)) {
                     throw Error(response.statusText);
@@ -171,7 +174,7 @@ export default class DetailedView extends Component {
     }
 
     fetchVersion(id, version) {
-        fetch(`/api/storage/${id}/version/${version}/`)
+        fetch(`/api/storage/${id}/version/${version}/`, {credentials: 'same-origin'})
             .then(response => {
                 if (this.validateHttpRequest(response.status)) {
                     throw Error(response.statusText);
@@ -206,6 +209,7 @@ export default class DetailedView extends Component {
                           'Accept': 'application/json',
                           'Content-Type': 'application/json'
                 },
+                credentials: 'same-origin',
                 body: JSON.stringify(data)
             })
             .then(response => {
@@ -234,7 +238,8 @@ export default class DetailedView extends Component {
             headers: {
                    'Accept': 'application/json',
                    'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'same-origin'
         });
     }
 
@@ -319,6 +324,7 @@ export default class DetailedView extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
              },
+             credentials: 'same-origin',
              body: JSON.stringify(data)
          })
            .then(response => {

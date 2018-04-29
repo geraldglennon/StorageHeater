@@ -1,9 +1,9 @@
 package com.glennon.storageHeater.presentation.mappers;
 
-import com.glennon.storageHeater.presentation.model.StorageObject;
+import com.glennon.storageHeater.presentation.api.StorageObject;
 import com.glennon.storageHeater.presentation.model.StorageParent;
 import com.glennon.storageHeater.presentation.model.StorageVersion;
-import com.glennon.storageHeater.presentation.model.StorageVersionObject;
+import com.glennon.storageHeater.presentation.api.StorageVersionObject;
 
 /**
  * Created by Gerald on 20/08/2017.

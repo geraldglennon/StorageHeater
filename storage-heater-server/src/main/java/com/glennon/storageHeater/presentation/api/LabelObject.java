@@ -1,4 +1,4 @@
-package com.glennon.storageHeater.presentation.model;
+package com.glennon.storageHeater.presentation.api;
 
 import javax.validation.constraints.NotNull;
 

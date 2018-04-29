@@ -1,6 +1,9 @@
 package com.glennon.storageHeater.presentation.services;
 
 import com.glennon.storageHeater.presentation.QueryConverter;
+import com.glennon.storageHeater.presentation.api.LabelObject;
+import com.glennon.storageHeater.presentation.api.StorageObject;
+import com.glennon.storageHeater.presentation.api.StorageVersionObject;
 import com.glennon.storageHeater.presentation.mappers.LabelMapper;
 import com.glennon.storageHeater.presentation.model.*;
 import com.glennon.storageHeater.presentation.repositories.LabelRepository;

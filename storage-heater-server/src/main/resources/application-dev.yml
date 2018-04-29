@@ -1,0 +1,3 @@
+spring:
+    profiles: dev
+    profiles.include: ldap-embedded

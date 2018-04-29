@@ -42,7 +42,7 @@ class DisplayTable extends Component {
             url += '&q=' + encodeURIComponent(`name~=${this.state.searchInput}`);
         }
 
-        fetch(url)
+        fetch(url, {credentials: 'same-origin'})
             .then(response => {
                 if (this.validateHttpRequest(response.status)) {
                     throw Error(response.statusText);

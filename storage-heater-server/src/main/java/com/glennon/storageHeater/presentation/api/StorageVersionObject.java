@@ -1,4 +1,6 @@
-package com.glennon.storageHeater.presentation.model;
+package com.glennon.storageHeater.presentation.api;
+
+import com.glennon.storageHeater.presentation.model.Version;
 
 /**
  * Created by Gerald on 13/07/2017.

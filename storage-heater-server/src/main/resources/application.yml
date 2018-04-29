@@ -1,0 +1,16 @@
+spring:
+  profiles.active: dev
+  session:
+    store-type: hazelcast
+    hazelcast:
+      flush-mode: immediate
+
+server:
+  port: 8040
+
+ldap:
+  ldif: users.ldif
+
+
+info.build:
+  version: @project.version@

@@ -1,7 +1,7 @@
 package com.glennon.storageHeater.presentation.mappers;
 
 import com.glennon.storageHeater.presentation.model.Label;
-import com.glennon.storageHeater.presentation.model.LabelObject;
+import com.glennon.storageHeater.presentation.api.LabelObject;
 
 /**
  * Created by Gerald on 20/08/2017.

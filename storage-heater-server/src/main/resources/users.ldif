@@ -1,0 +1,12 @@
+dn: ou=people,dc=springframework,dc=org
+objectclass: organizationalUnit
+ou: people
+
+dn: uid=admin,ou=people,dc=springframework,dc=org
+objectclass: organizationalUnit
+cn: admin
+givenName: admin
+sn: admin
+mail: admin@somewhere.com
+uid: admin
+userPassword: admin

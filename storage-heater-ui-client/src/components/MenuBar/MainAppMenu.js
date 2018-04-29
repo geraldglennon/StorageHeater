@@ -7,10 +7,11 @@ class MainAppMenu extends Component {
      render () {
         return (
 			<div>
-				<Menu onSelect={this.onSelection} mode="vertical">
+				<Menu onSelect={this.onSelection.bind(this)} mode="vertical">
 				  <MenuItem key="home">Home</MenuItem>
 				  <MenuItem key="storage">Storage List</MenuItem>
-				  <MenuItem key="view">Create New</MenuItem>			 
+				  <MenuItem key="view">Create</MenuItem>
+				  <MenuItem key="logout">Logout</MenuItem>
 				</Menu>
 			</div>
         );
@@ -24,7 +25,27 @@ class MainAppMenu extends Component {
             browserHistory.push('/storage');
         } else if (id === 'view') {
             browserHistory.push('/view');
+        } else if (id === 'logout') {
+            this.logout();
         }
+     }
+
+     logout() {
+        fetch('/api/login',
+        {
+            method: 'DELETE',
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.status !== 200) {
+                throw Error(response.statusText);
+            } else {
+                 browserHistory.push('/login');
+            }
+        })
+        .catch((error) => {
+            console.error('Failed to logout')
+        });
      }
 }
 
