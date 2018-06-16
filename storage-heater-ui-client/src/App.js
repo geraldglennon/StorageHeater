@@ -48,7 +48,7 @@ class App extends Component {
                     <h2>Storage Heater</h2>
                 </div>
                 <div className="app-body">
-                    {this.props.user &&
+                    {this.props.user && this.props.user.authenticated &&
                         <div className="app-menu">
                             <MainAppMenu />
                         </div>
@@ -79,7 +79,6 @@ class App extends Component {
         })
         .then(response => {
             if (response.status === 200) {
-//                this.setState({isAuthenticated: true});
             } else {
                 throw Error(response.statusText);
             }

@@ -11,7 +11,6 @@ const user = (state = {}, action) => {
         let newState = Object.assign({}, state)
         newState.user = action.payload;
         return newState;
-//      return action.payload;
     default:
       return state;
   }

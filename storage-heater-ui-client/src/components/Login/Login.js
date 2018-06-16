@@ -63,7 +63,6 @@ class Login extends Component {
         .then(response => {
             if (response.status === 200) {
                 this.setState({isAuthenticated: true, error: ''});
-                const { user } = this.state;
                 this.props.onLogin({
                     userName: this.state.username,
                     authenticated: true

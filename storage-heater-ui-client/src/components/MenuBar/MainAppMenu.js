@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import Menu, {MenuItem} from 'rc-menu';
 import 'rc-menu/assets/index.css';
+import { connect } from 'react-redux';
+import { getUser } from '../actions/actions';
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  onLogout: (user) => {
+    dispatch(getUser(user));
+  }
+});
 
 class MainAppMenu extends Component {
      render () {
@@ -40,13 +52,15 @@ class MainAppMenu extends Component {
             if (response.status !== 200) {
                 throw Error(response.statusText);
             } else {
+                 this.props.onLogout({userName: '', authenticated: false});
                  browserHistory.push('/login');
             }
         })
         .catch((error) => {
+            console.error(error)
             console.error('Failed to logout')
         });
      }
 }
 
-export default MainAppMenu;
+export default connect(mapStateToProps, mapDispatchToProps) (MainAppMenu);
