@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import './Login.css'
+import { connect } from 'react-redux';
+import { getUser } from '../actions/actions';
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: (user) => {
+    dispatch(getUser(user));
+  }
+});
 
 class Login extends Component {
     constructor () {
@@ -9,13 +21,13 @@ class Login extends Component {
             username: '',
             password: '',
             error: '',
-            isAuthenticated: false
+            isAuthenticated: false,
+            user: {userName: '', authenticated: false}
         };
     }
 
     validateForm() {
         return this.state.username.length === 0 && this.state.password.length === 0;
-
     }
 
     handleUsername(e) {
@@ -51,11 +63,16 @@ class Login extends Component {
         .then(response => {
             if (response.status === 200) {
                 this.setState({isAuthenticated: true, error: ''});
+                const { user } = this.state;
+                this.props.onLogin({
+                    userName: this.state.username,
+                    authenticated: true
+                    });
                 browserHistory.push('/');
             } else {
                 throw Error(response.statusText);
             }
-          return response.json();
+          return response;
         })
         .catch((error) => {
             this.setState({
@@ -83,4 +100,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

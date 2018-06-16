@@ -4,8 +4,21 @@ import DisplayTable from './components/DisplayTable/DisplayTable';
 import Details from './components/Storage/view/View';
 import Welcome from './components/Welcome/Welcome';
 import Login from './components/Login/Login';
+import { getUser } from './components/actions/actions';
 
 import './App.css';
+
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onAuthenticate: (user) => {
+    dispatch(getUser(user));
+  }
+});
 
 import { Router, Route, browserHistory } from 'react-router'
 
@@ -14,7 +27,8 @@ class App extends Component {
     constructor () {
         super();
         this.state = {
-           isAuthenticated: false
+           isAuthenticated: false,
+           user: {}
         };
     }
 
@@ -27,18 +41,19 @@ class App extends Component {
     }
 
     render () {
+
         return (
             <div className="App">
                 <div className="App-header">    
                     <h2>Storage Heater</h2>
                 </div>
                 <div className="app-body">
-                    {this.state && this.state.isAuthenticated &&
+                    {this.props.user &&
                         <div className="app-menu">
                             <MainAppMenu />
                         </div>
                     }
-                    <div className="app-content ">
+                    <div className="app-content">
                         <Router history={browserHistory}>
                             <Route path="/" component={Welcome} />
                             <Route path="/login" component={Login} />
@@ -64,10 +79,18 @@ class App extends Component {
         })
         .then(response => {
             if (response.status === 200) {
-                this.setState({isAuthenticated: true});
+//                this.setState({isAuthenticated: true});
             } else {
                 throw Error(response.statusText);
             }
+
+            return response.json();
+        })
+        .then(items => {
+            this.props.onAuthenticate({
+                     userName: items.userName,
+                     authenticated: items.authenticated
+                 });
         })
         .catch((error) => {
             browserHistory.push('/login');
@@ -75,4 +98,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

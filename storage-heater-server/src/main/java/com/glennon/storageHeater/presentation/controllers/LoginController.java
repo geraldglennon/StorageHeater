@@ -1,10 +1,12 @@
 package com.glennon.storageHeater.presentation.controllers;
 
 import com.glennon.storageHeater.presentation.api.UserCredentials;
+import com.glennon.storageHeater.presentation.api.UserInfo;
 import com.glennon.storageHeater.presentation.services.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +35,10 @@ public class LoginController {
         if(!securityService.isAuthenticated()) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity(HttpStatus.OK);
+
+        Authentication currentUser = securityService.getCurrentUser();
+
+        UserInfo userInfo = new UserInfo(currentUser.getName(), currentUser.isAuthenticated());
+        return new ResponseEntity(userInfo, HttpStatus.OK);
     }
 }
