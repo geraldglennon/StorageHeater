@@ -16,4 +16,9 @@ h2 {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    cursor: pointer;
+}
+
+.rc-menu-item {
+    cursor: pointer;
 }
