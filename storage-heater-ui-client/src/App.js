@@ -54,13 +54,7 @@ class App extends Component {
                         </div>
                     }
                     <div className="app-content">
-                        <Router history={browserHistory}>
-                            <Route path="/" component={Welcome} />
-                            <Route path="/login" component={Login} />
-                            <Route path="/storage" component={DisplayTable} />
-                            <Route path="/view" component={Details} />
-                            <Route path="*" component={Welcome} />
-                        </Router>
+                        <Router history={browserHistory} routes={routes} />
                     </div>
                 </div>
             </div>
@@ -96,5 +90,13 @@ class App extends Component {
         });
     }
 }
+
+const routes = [
+   { path: '/', component: Welcome },
+   { path: '/login', component: Login },
+   { path: '/storage', component: DisplayTable },
+   { path: '/view', component: Details },
+   { path: '*', component: Welcome}
+];
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
