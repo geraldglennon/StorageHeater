@@ -12,6 +12,8 @@
     <modules>
         <module>storage-heater-ui-client</module>
         <module>storage-heater-server</module>
+        <module>storage-heater-client</module>
+        <module>storage-heater-api</module>
     </modules>
 
     <properties>

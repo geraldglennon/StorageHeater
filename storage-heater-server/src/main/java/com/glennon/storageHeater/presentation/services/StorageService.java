@@ -216,7 +216,8 @@ public class StorageService {
                     version.getMinor(),
                     version.getBuild());
 
-            return new ResponseEntity(byIdAndVersion, HttpStatus.OK);
+            StorageVersionObject storageVersionObject = mapVersionObject(byIdAndVersion);
+            return new ResponseEntity(storageVersionObject, HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
