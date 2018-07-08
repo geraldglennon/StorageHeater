@@ -427,7 +427,7 @@ export default class DetailedView extends Component {
                 <h4>Description</h4>
                 <div className='detailedView-description'>
                     <RIETextArea
-                      value={this.state.description}
+                      value={this.state.description || 'No description'}
                       change={this.handleDescriptionChange.bind(this)}
                       propName='description'
                       validate={this.validate.bind(this)}

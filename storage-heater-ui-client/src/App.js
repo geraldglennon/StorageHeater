@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, browserHistory } from 'react-router'
 
 class App extends Component {
 
