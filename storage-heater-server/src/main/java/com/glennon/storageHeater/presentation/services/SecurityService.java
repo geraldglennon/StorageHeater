@@ -19,9 +19,6 @@ import java.util.Optional;
 public class SecurityService {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
     private UserSessionService userSessionService;
 
     private final Authentication anonymousUser = new AnonymousAuthenticationToken("key", "anonymousUser",
@@ -33,37 +30,5 @@ public class SecurityService {
                 .orElse(anonymousUser);
 
         return auth;
-    }
-
-    public boolean login(UserCredentials userCredentials) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                userCredentials.getUsername(), userCredentials.getPassword());
-
-        try {
-            authentication = authenticationManager.authenticate(authentication);
-        } catch (BadCredentialsException e) {
-            return false;
-        }
-
-        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        securityContext.setAuthentication(authentication);
-        SecurityContextHolder.setContext(securityContext);
-
-        String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
-        String name = securityContext.getAuthentication().getName();
-
-        userSessionService.createUserSession(sessionId, name);
-
-        return true;
-    }
-
-    public boolean isAuthenticated() {
-        Authentication currentUser = getCurrentUser();
-
-        if (currentUser.getName().equals(anonymousUser.getName())) {
-            return false;
-        }
-
-        return currentUser.isAuthenticated();
     }
 }

@@ -36,11 +36,11 @@ export default class DetailedView extends Component {
 
     save() {
         let method = 'POST';
-        let url = `/api/storage/`;
+        let url = `/api/storage`;
 
         if (this.state.id) {
             method = 'PUT'
-            url += `${this.state.currentVersionId}/version`
+            url += `/${this.state.currentVersionId}/version`
         }
 
         fetch(url,
@@ -174,7 +174,7 @@ export default class DetailedView extends Component {
     }
 
     fetchVersion(id, version) {
-        fetch(`/api/storage/${id}/version/${version}/`, {credentials: 'same-origin'})
+        fetch(`/api/storage/${id}/version/${version}`, {credentials: 'same-origin'})
             .then(response => {
                 if (this.validateHttpRequest(response.status)) {
                     throw Error(response.statusText);
@@ -203,7 +203,7 @@ export default class DetailedView extends Component {
             versions: this.state.versions
         }
 
-        fetch(`/api/storage/`, {
+        fetch(`/api/storage`, {
                 method: 'PUT',
                 headers: {
                           'Accept': 'application/json',

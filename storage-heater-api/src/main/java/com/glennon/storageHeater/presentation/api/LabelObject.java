@@ -1,6 +1,6 @@
 package com.glennon.storageHeater.presentation.api;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Created by Gerald on 13/07/2017.

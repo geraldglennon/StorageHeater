@@ -45,8 +45,7 @@ public class StorageService {
     private MongoTemplate mongoTemplate;
 
     public ResponseEntity getPaginated(int page, int perPage, String q) {
-        Sort sort = new Sort(Sort.Direction.ASC, "name");
-        Pageable pageable = new PageRequest(page, perPage, sort);
+        Pageable pageable = PageRequest.of(page, perPage, Sort.by(Sort.Direction.ASC, "name"));
         Optional<Page<StorageParent>> pagination = null;
 
         if (q.length() > 0) {
@@ -67,7 +66,7 @@ public class StorageService {
     }
 
     public ResponseEntity getStorage (String uid) {
-        Optional<StorageParent> storageObject = Optional.ofNullable(storageParentRepository.findById(uid));
+        Optional<StorageParent> storageObject = storageParentRepository.findById(uid);
         if (!storageObject.isPresent()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -77,7 +76,7 @@ public class StorageService {
     }
 
     public ResponseEntity getStorageVersion (String uid, String version) {
-        Optional<StorageParent> storageObject = Optional.ofNullable(storageParentRepository.findById(uid));
+        Optional<StorageParent> storageObject = storageParentRepository.findById(uid);
         if (!storageObject.isPresent()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
@@ -90,7 +89,7 @@ public class StorageService {
         Version versionObj = new Version(version);
 
         Optional<StorageVersion> storageVersion = Optional.ofNullable(
-                storageVersionRepository.findByIdAndVersion(
+                storageVersionRepository.findByParentIdAndVersionMajorAndVersionMinorAndVersionBuild(
                         storageObject.get().getId(),
                         versionObj.getMajor(),
                         versionObj.getMinor(),
@@ -129,7 +128,7 @@ public class StorageService {
     }
 
     public ResponseEntity updateStorage (String uid, StorageVersion storageVersion) {
-        Optional<StorageVersion> foundStorageObject = Optional.ofNullable(storageVersionRepository.findById(uid));
+        Optional<StorageVersion> foundStorageObject = storageVersionRepository.findById(uid);
         if (!foundStorageObject.isPresent()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else if (foundStorageObject.get().isLocked()) {
@@ -140,7 +139,7 @@ public class StorageService {
     }
 
     public ResponseEntity lockOrUnlockStorageVersion (String uid, boolean lock) {
-        Optional<StorageVersion> foundStorageObject = Optional.ofNullable(storageVersionRepository.findById(uid));
+        Optional<StorageVersion> foundStorageObject = storageVersionRepository.findById(uid);
         if (!foundStorageObject.isPresent()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -151,67 +150,82 @@ public class StorageService {
     }
 
     public ResponseEntity deleteStorage (String uid) {
-        StorageParent storageParent = storageParentRepository.findById(uid);
-        storageParent.getVersions().stream().forEach(version -> {
-            Version versionObj = new Version(version);
-            StorageVersion byIdAndVersion = storageVersionRepository.findByIdAndVersion(storageParent.getId(),
-                    versionObj.getMajor(),
-                    versionObj.getMinor(),
-                    versionObj.getBuild());
+        Optional<StorageParent> storageParent = storageParentRepository.findById(uid);
 
-            storageVersionRepository.delete(byIdAndVersion.getId());
-        });
-        storageParentRepository.delete(uid);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        if (storageParent.isPresent()) {
+            StorageParent parent = storageParent.get();
+            parent.getVersions().stream().forEach(version -> {
+                Version versionObj = new Version(version);
+                StorageVersion byIdAndVersion = storageVersionRepository.findByParentIdAndVersionMajorAndVersionMinorAndVersionBuild(parent.getId(),
+                        versionObj.getMajor(),
+                        versionObj.getMinor(),
+                        versionObj.getBuild());
+
+                storageVersionRepository.delete(byIdAndVersion);
+            });
+            storageParentRepository.delete(parent);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity createNewVersion (String uid) {
-        StorageParent storageParent = storageParentRepository.findById(uid);
+        Optional<StorageParent> storageParent = storageParentRepository.findById(uid);
 
-        int versionsSize = storageParent.getVersions().size();
-        String version = storageParent.getVersions().get(versionsSize - 1);
-        Version versionObj = new Version(version);
+        if (storageParent.isPresent()) {
+            StorageParent parent = storageParent.get();
+            int versionsSize = parent.getVersions().size();
+            String version = parent.getVersions().get(versionsSize - 1);
+            Version versionObj = new Version(version);
 
 
-        Optional<StorageVersion> storageVersion = Optional.ofNullable(
-                storageVersionRepository.findByIdAndVersion(
-                        storageParent.getId(),
-                        versionObj.getMajor(),
-                        versionObj.getMinor(),
-                        versionObj.getBuild())
-        );
+            Optional<StorageVersion> storageVersion = Optional.ofNullable(
+                    storageVersionRepository.findByParentIdAndVersionMajorAndVersionMinorAndVersionBuild(
+                            parent.getId(),
+                            versionObj.getMajor(),
+                            versionObj.getMinor(),
+                            versionObj.getBuild())
+            );
 
-        if (!storageVersion.isPresent()) {
+            if (storageVersion.isEmpty()) {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+
+            storageVersion.get().setId(null);
+            versionObj.incrementBuild();
+            storageVersion.get().setVersion(versionObj);
+            StorageVersion savedStorageVersion = storageVersionRepository.save(storageVersion.get());
+
+            parent.getVersions().add(savedStorageVersion.getVersion().toString());
+            storageParentRepository.save(parent);
+
+            Collections.reverse(parent.getVersions());
+
+            return new ResponseEntity(parent, HttpStatus.OK);
+        } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-
-        storageVersion.get().setId(null);
-        versionObj.incrementBuild();
-        storageVersion.get().setVersion(versionObj);
-        StorageVersion savedStorageVersion = storageVersionRepository.save(storageVersion.get());
-
-        storageParent.getVersions().add(savedStorageVersion.getVersion().toString());
-        storageParentRepository.save(storageParent);
-
-        Collections.reverse(storageParent.getVersions());
-
-        return new ResponseEntity(storageParent, HttpStatus.OK);
     }
 
     public ResponseEntity updateParent(StorageParent storageParent) {
-        StorageParent parent = storageParentRepository.findById(storageParent.getId());
-        storageParent.setVersions(parent.getVersions());
-        StorageParent save = storageParentRepository.save(storageParent);
+        Optional<StorageParent> parent = storageParentRepository.findById(storageParent.getId());
+        if (parent.isPresent()) {
+            storageParent.setVersions(parent.get().getVersions());
+            StorageParent save = storageParentRepository.save(storageParent);
 
-        Collections.reverse(save.getVersions());
-        return new ResponseEntity(save, HttpStatus.OK);
+            Collections.reverse(save.getVersions());
+            return new ResponseEntity(save, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity getLabel(String name) {
         Optional<Label> label = Optional.ofNullable(labelRepository.findByName(name));
         if (label.isPresent()) {
             Version version = new Version(label.get().getVersion());
-            StorageVersion byIdAndVersion = storageVersionRepository.findByIdAndVersion(label.get().getParentId(),
+            StorageVersion byIdAndVersion = storageVersionRepository.findByParentIdAndVersionMajorAndVersionMinorAndVersionBuild(label.get().getParentId(),
                     version.getMajor(),
                     version.getMinor(),
                     version.getBuild());

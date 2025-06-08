@@ -1,9 +1,0 @@
-spring:
-  profiles: prod
-  data.mongodb:
-    host: mongodb://localhost
-    port: 27017
-    database: mongo_db
-
-server:
-  port: 80

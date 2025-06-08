@@ -1,6 +1,6 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 
-COPY /app.jar /app.jar
+COPY storage-heater-server/app.jar /app.jar
 
 RUN sh -c 'touch /app.jar'
 

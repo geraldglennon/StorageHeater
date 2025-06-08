@@ -57,9 +57,11 @@ typings/
 # dotenv environment variables file
 .env
 
-intellij
+#intellij
 .idea
 *.iml
 
-maven
+#maven
 target/
+
+*/package-lock.json

@@ -1,16 +1,13 @@
 spring:
-  profiles.active: dev
-  session:
-    store-type: hazelcast
-    hazelcast:
-      flush-mode: immediate
+  data:
+    mongodb:
+      uri: mongodb://root:example@localhost:27017/mongo_db?authSource=admin
 
 server:
   port: 8040
 
-ldap:
-  ldif: users.ldif
-
 
 info.build:
   version: @project.version@
+
+

@@ -1,11 +1,15 @@
 package com.glennon.storageHeater.presentation.model;
 
-import org.junit.Test;
+
+
+import org.junit.jupiter.api.Test;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 /**
  * Created by Gerald on 05/06/2017.
@@ -21,8 +25,8 @@ public class VersionTest {
         assertEquals(version.getBuild(), 3);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test()
     public void testBadVersion() {
-        Version version = new Version("1.2.3.2");
+        assertThrows(IllegalStateException.class, ()-> new Version("1.2.3.2"));
     }
 }

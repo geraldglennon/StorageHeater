@@ -41,12 +41,12 @@ public class ChangeLog {
         List<StorageParent> storageParents = objectMapper.readValue(testData,
                 new TypeReference<List<StorageParent>>(){});
 
-        storageParentRepository.save(storageParents);
+        storageParentRepository.saveAll(storageParents);
 
         List<StorageVersion> storageVersions = objectMapper.readValue(testDataVersions,
                 new TypeReference<List<StorageVersion>>(){});
 
-        storageVersionRepository.save(storageVersions);
+        storageVersionRepository.saveAll(storageVersions);
 
         return true;
     }

@@ -1,6 +1,4 @@
-spring:
-    profiles: test
-    profiles.include: ldap-embedded
+
 
 server:
-            port: 80
+    port: 80
