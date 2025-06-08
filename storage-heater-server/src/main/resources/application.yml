@@ -4,10 +4,26 @@ spring:
       uri: mongodb://root:example@localhost:27017/mongo_db?authSource=admin
 
 server:
-  port: 8040
+  port: 80
+  shutdown: graceful
 
 
 info.build:
   version: @project.version@
+
+management:
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,loggers,metrics
 
 
